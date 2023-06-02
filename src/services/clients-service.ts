@@ -2,7 +2,7 @@ import errors from "../errors/errors";
 import clientsRepository from "../repositories/clients-repository";
 import userRepository from "../repositories/users-repository";
 
-async function findClientByEmail(user_id: number) {
+async function findClientById(user_id: number) {
   await validateUserById(user_id);
 
   const client = await clientsRepository.findClientById(user_id);
@@ -18,7 +18,7 @@ async function validateUserById(user_id: number) {
 }
 
 const clientsService = {
-  findClientByEmail,
+  findClientById,
 };
 
 export default clientsService;

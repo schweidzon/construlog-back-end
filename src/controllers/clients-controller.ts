@@ -1,20 +1,24 @@
-import { NextFunction, Request, Response } from "express"
-import clientsService from '../services/clients-service'
+import { NextFunction, Request, Response } from "express";
+import clientsService from "../services/clients-service";
 
-async function findClientByEmail(req: Request, res:Response, next: NextFunction) {
-    const userId= Number(req.query.user_id)
-    console.log(userId)
-    try {
-        const client = await clientsService.findClientByEmail(userId)
-        
-        return res.send(client)
-    } catch (error) {
-        next(error)
-    }
+async function findClientById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const userId = Number(req.query.user_id);
+  console.log(userId);
+  try {
+    const client = await clientsService.findClientById(userId);
+
+    return res.send(client);
+  } catch (error) {
+    next(error);
+  }
 }
 
 const clientsController = {
-    findClientByEmail
-}
+  findClientById,
+};
 
-export default clientsController
+export default clientsController;
