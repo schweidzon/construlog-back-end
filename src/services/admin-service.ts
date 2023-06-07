@@ -1,15 +1,23 @@
 import errors from "../errors/errors";
+import { AdminSignUp } from "../protocols/adminSingUpType";
 import adminRepository from "../repositories/admin-repository";
 import userRepository from "../repositories/users-repository";
 
 async function findAdminById(user_id: number) {
   await validateUserById(user_id);
 
-  const admin = await adminRepository.findAdminById(user_id);
+  const admin = await validateAdminByUserId(user_id);
 
   if (!admin) throw errors.notFoundError();
 
   return admin;
+}
+
+async function createAdmin({ name, job, user_id }: AdminSignUp) {
+  const admin = await validateAdminByUserId(user_id);
+  if (admin) throw errors.conflictError("Administrador já registrado");
+  const newAdmin = adminRepository.createAdmin({ name, job, user_id });
+  return newAdmin;
 }
 
 async function validateUserById(user_id: number) {
@@ -17,8 +25,17 @@ async function validateUserById(user_id: number) {
   if (!checkUser) throw errors.notFoundError();
 }
 
+async function validateAdminByUserId(user_id: number) {
+  console.log(user_id);
+  const admin = await adminRepository.findAdminById(user_id);
+  console.log(admin);
+
+  return admin;
+}
+
 const adminService = {
-    findAdminById,
+  findAdminById,
+  createAdmin,
 };
 
 export default adminService;

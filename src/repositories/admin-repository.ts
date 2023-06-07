@@ -1,6 +1,8 @@
 import prisma from "../config/database"
+import { AdminSignUp } from "../protocols/adminSingUpType"
 
-async function findAdminById(user_id: number) {
+ function findAdminById(user_id: number) {
+    console.log(user_id)
     return prisma.admins.findFirst({
         where: {
             user_id
@@ -8,7 +10,14 @@ async function findAdminById(user_id: number) {
     })
 }
 
+function createAdmin(data: AdminSignUp) {
+    return prisma.admins.create({
+        data
+    })
+}
+
 const adminRepository = {
-    findAdminById
+    findAdminById,
+    createAdmin
 }
 export default adminRepository

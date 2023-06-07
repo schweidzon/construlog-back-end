@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import adminService from "../services/admin-service";
+import { AdminSignUp } from "../protocols/adminSingUpType";
 
 async function findAdminById(req: Request, res: Response, next: NextFunction) {
   const userId = Number(req.query.user_id);
@@ -14,7 +15,14 @@ async function findAdminById(req: Request, res: Response, next: NextFunction) {
 }
 
 async function createAdmin(req: Request, res: Response, next: NextFunction) {
-    console.log('oi')
+  const { name, job, user_id } = req.body as AdminSignUp;
+  try {
+    const admin = await adminService.createAdmin({ name, job, user_id });
+    return res.status(201).send(admin);
+  } catch (error) {
+    console.log(error)
+    next(error);
+  }
 }
 
 const adminController = {

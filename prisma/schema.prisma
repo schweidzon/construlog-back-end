@@ -22,7 +22,7 @@ model address {
 model admins {
   id            Int             @id(map: "admins_pk") @default(autoincrement())
   name          String          @db.VarChar(255)
-  function      String          @db.VarChar(15)
+  job           String          @db.VarChar(15)
   user_id       Int
   users         users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "admins_fk0")
   constructions constructions[]
