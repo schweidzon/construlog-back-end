@@ -20,6 +20,12 @@ export default function handleErrors(err: ErrorType, req: Request, res: Response
         })
     }
 
+    if(err.name === 'unauthorizedError') {
+        return res.status(httpStatus.UNAUTHORIZED).send({
+            message: err.message
+        })
+    }
+
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
         error: "InternalServerError",
         message: "Internal Server Error"

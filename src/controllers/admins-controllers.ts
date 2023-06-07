@@ -15,7 +15,7 @@ async function findAdminById(req: Request, res: Response, next: NextFunction) {
 }
 
 async function createAdmin(req: Request, res: Response, next: NextFunction) {
-  const { name, job, user_id } = req.body as AdminSignUp;
+  const { name, job, user_id} = req.body as AdminSignUp;
   try {
     const admin = await adminService.createAdmin({ name, job, user_id });
     return res.status(201).send(admin);

@@ -14,6 +14,8 @@ async function findAdminById(user_id: number) {
 }
 
 async function createAdmin({ name, job, user_id }: AdminSignUp) {
+  const user = await validateUserById(user_id)
+  if(user.user_type!== "admin") throw errors.unauthorizedError()
   const admin = await validateAdminByUserId(user_id);
   if (admin) throw errors.conflictError("Administrador já registrado");
   const newAdmin = adminRepository.createAdmin({ name, job, user_id });
@@ -23,12 +25,13 @@ async function createAdmin({ name, job, user_id }: AdminSignUp) {
 async function validateUserById(user_id: number) {
   const checkUser = await userRepository.getUserById(user_id);
   if (!checkUser) throw errors.notFoundError();
+  return checkUser
 }
 
 async function validateAdminByUserId(user_id: number) {
-  console.log(user_id);
+
   const admin = await adminRepository.findAdminById(user_id);
-  console.log(admin);
+  
 
   return admin;
 }

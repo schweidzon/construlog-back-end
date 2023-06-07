@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import clientsService from "../services/clients-service";
+import {ClientSignUp} from '../protocols/ClientSignUp'
 
 async function findClientById(
   req: Request,
@@ -17,8 +18,20 @@ async function findClientById(
   }
 }
 
+async function createClient(req: Request, res: Response, next: NextFunction) {
+  const { name, user_id } = req.body as ClientSignUp;
+  try {
+    const client = await clientsService.createClient({ name, user_id });
+    return res.status(201).send(client);
+  } catch (error) {
+   
+    next(error);
+  }
+}
+
 const clientsController = {
   findClientById,
+  createClient
 };
 
 export default clientsController;
