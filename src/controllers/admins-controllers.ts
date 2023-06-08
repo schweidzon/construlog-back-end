@@ -7,7 +7,7 @@ async function findAdminById(req: Request, res: Response, next: NextFunction) {
 
   try {
     const admin = await adminService.findAdminById(userId);
-
+    
     return res.send(admin);
   } catch (error) {
     next(error);

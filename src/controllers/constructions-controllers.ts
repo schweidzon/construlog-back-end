@@ -19,9 +19,11 @@ async function createConstruction(req: AuthenticatedRequest, res: Response, next
     }
 }
 
-async function getConstructions(req: Request, res: Response, next: NextFunction) {
+async function getConstructions(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    const {user_id} = req;
+    
     try {
-            const constructions = await constructionService.getConstructions()
+            const constructions = await constructionService.getConstructions(user_id)
             return res.send(constructions)
     } catch (error) {
         next(error)

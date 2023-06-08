@@ -13,6 +13,7 @@ async function findClientById(
 
     return res.send(client);
   } catch (error) {
+    console.log(error)
     next(error);
   }
 }

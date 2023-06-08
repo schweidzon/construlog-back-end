@@ -6,7 +6,7 @@ import userRepository from "../repositories/users-repository";
 async function findClientById(user_id: number) {
   await validateUserById(user_id);
 
-  const client = await clientsRepository.findClientById(user_id);
+  const client = await clientsRepository.findClientByUserId(user_id);
 
   if (!client) throw errors.notFoundError();
 

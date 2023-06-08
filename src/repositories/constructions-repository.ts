@@ -9,8 +9,22 @@ async function createConstruction(data: CreateConstruction) {
 
 }
 
-async function getConstructions() {
-    return prisma.constructions.findMany({})
+async function getConstructions(id: number, user_type: string) {
+    if(user_type === 'admin') {
+        return prisma.constructions.findMany({
+            where: {
+                admin_id: id
+            }
+        })
+
+    } else {
+        return prisma.constructions.findMany({
+            where: {
+                client_id: id
+            }
+        })
+    }
+   
 }
 
 const constructionRepository = {
