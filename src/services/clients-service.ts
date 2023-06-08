@@ -36,9 +36,16 @@ async function validateClientByUserId(user_id: number) {
   return admin;
 }
 
+async function getAllClients() {
+  const clients = await clientsRepository.getAllClients()
+  if(!clients) throw errors.notFoundError()
+  return clients
+}
+
 const clientsService = {
   findClientById,
   createClient,
+  getAllClients
 };
 
 export default clientsService;

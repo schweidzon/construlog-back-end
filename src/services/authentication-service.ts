@@ -28,10 +28,17 @@ async function validatePassowrd(passowrd: string, userPassword: string) {
   if (!checkPassword) throw errors.invalidCredentials();
 }
 
-async function createSession(userId: number) {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET || "senha_secreta");
-  await sessionRepository.createSession({ token, user_id: userId });
+async function createSession(user_id: number) {
+  const user_type = await getUserType(user_id)
+  if(!user_type) throw errors.notFoundError()
+  const token = jwt.sign({ user_id, user_type }, process.env.JWT_SECRET || "senha_secreta");
+  await sessionRepository.createSession({ token, user_id });
   return token
+}
+
+async function getUserType(userId: number) {
+  const {user_type} = await userRepository.getUserById(userId)
+  return user_type
 }
 
 const authService = {

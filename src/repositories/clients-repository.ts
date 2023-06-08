@@ -23,9 +23,14 @@ function createClient(data: ClientSignUp) {
     })
 }
 
+function getAllClients() {
+    return prisma.clients.findMany({})
+}
+
 const clientsRepository = {
     findClientById,
     findClientByUserId,
-    createClient
+    createClient,
+    getAllClients
 }
 export default clientsRepository

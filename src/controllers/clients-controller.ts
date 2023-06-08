@@ -8,7 +8,6 @@ async function findClientById(
   next: NextFunction
 ) {
   const userId = Number(req.query.user_id);
-  console.log(userId);
   try {
     const client = await clientsService.findClientById(userId);
 
@@ -29,9 +28,20 @@ async function createClient(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+async function getAllClients(req: Request, res: Response, next: NextFunction) {
+  console.log('poi')
+  try {
+      const clients = await clientsService.getAllClients()
+      return res.send(clients)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const clientsController = {
   findClientById,
-  createClient
+  createClient,
+  getAllClients
 };
 
 export default clientsController;
