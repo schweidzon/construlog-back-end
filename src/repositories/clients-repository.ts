@@ -9,6 +9,14 @@ function findClientByUserId(user_id: number) {
   });
 }
 
+function findClientById(client_id : number) {
+  return prisma.clients.findFirst({
+    where: {
+      id: client_id
+    }
+  })
+} 
+
 function createClient(data: ClientSignUp) {
   return prisma.clients.create({
     data,
@@ -23,5 +31,6 @@ const clientsRepository = {
   findClientByUserId,
   createClient,
   getAllClients,
+  findClientById
 };
 export default clientsRepository;

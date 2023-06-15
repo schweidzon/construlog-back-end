@@ -6,7 +6,11 @@ import { NextFunction, Request, Response } from "express"
 async function createConstruction(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const {user_id} =  req 
 
+   
+
     const {client_id, name} = req.body as ConstructionSignup
+
+    console.log(client_id, 'cliente')
     try {
 
         const construction = await constructionService.createConstruction({user_id, client_id, name})
